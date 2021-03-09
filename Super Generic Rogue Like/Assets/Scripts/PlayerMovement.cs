@@ -4,35 +4,60 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+
+    bool Turn = true;
+    int movedCount = 0;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+
 
     // Update is called once per frame
     void Update()
     {
         //Check if game is paused, if paused, do not allow movement
-        Debug.DrawLine(transform.position, transform.position + Vector3.right, Color.white);
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Turn) //Check if it is the player's turn to move.
         {
-            transform.position += Vector3.up;
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            transform.position += Vector3.left;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-
-            transform.position += Vector3.down;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                transform.position += Vector3.up;
+                movedCount += 1;
             }
-            transform.position += Vector3.right;
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                transform.position += Vector3.left;
+                movedCount += 1;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+
+                transform.position += Vector3.down;
+                movedCount += 1;
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                transform.position += Vector3.right;
+                movedCount += 1;
+            }
+            if (movedCount == 2)
+            {
+                setTurn(false);
+            }
         }
+    }
+
+    public void setTurn(bool value)
+    {
+        if (value)
+        {
+            movedCount = 0;
+        }
+        Turn = value;
+    }
+    public bool getTurn()
+    {
+        return Turn;
+    }
 
     }
