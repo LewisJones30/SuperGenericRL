@@ -13,6 +13,7 @@ TagManager:
   - PauseUI
   - MainPause
   - HowToPlayPause
+  - BlockTerrain
   layers:
   - Default
   - TransparentFX
