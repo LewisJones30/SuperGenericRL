@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
-        if (movedCount > 0)
+        if (movedCount > 0 && collision.gameObject.tag == "EnemyRandom" || collision.gameObject.tag == "EnemyLocator")
         {
             Destroy(collision.gameObject);
         }
