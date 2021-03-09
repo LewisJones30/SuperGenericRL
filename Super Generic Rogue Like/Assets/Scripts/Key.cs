@@ -22,6 +22,7 @@ public class Key : MonoBehaviour
         {
             Debug.Log("Key obtained!");
             collision.gameObject.GetComponent<PlayerMovement>().setKeyObtained(true);
+            GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>().EnableKeySprite();
             Destroy(gameObject);
         }
     }

@@ -10,8 +10,14 @@ public class PlayerMovement : MonoBehaviour
     int movedCount = 0;
     bool KeyObtained = false;
     // Start is called before the first frame update
+    [SerializeField]
+    GameObject UI;
+    UIController UIController;
 
-
+    void Start()
+    {
+        UIController = UI.GetComponent<UIController>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -24,22 +30,25 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.position += Vector3.up;
                 movedCount += 1;
+                UIController.subTurnsRemaining(1);
             }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 transform.position += Vector3.left;
                 movedCount += 1;
+                UIController.subTurnsRemaining(1);
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
-
                 transform.position += Vector3.down;
                 movedCount += 1;
+                UIController.subTurnsRemaining(1);
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 transform.position += Vector3.right;
                 movedCount += 1;
+                UIController.subTurnsRemaining(1);
             }
             if (movedCount == 2)
             {
