@@ -60,4 +60,12 @@ public class PlayerMovement : MonoBehaviour
         return Turn;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if (movedCount > 0)
+        {
+            Destroy(collision.gameObject);
+        }
     }
+}
