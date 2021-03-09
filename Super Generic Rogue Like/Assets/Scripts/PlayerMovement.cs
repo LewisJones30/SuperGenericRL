@@ -23,7 +23,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Check if game is paused, if paused, do not allow movement
-
+        if (UIController.getPaused())
+        {
+            return;
+        }
         if (Turn) //Check if it is the player's turn to move.
         {
             if (Input.GetKeyDown(KeyCode.W))

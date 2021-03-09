@@ -9,6 +9,10 @@ TagManager:
   - EnemyRandom
   - EnemyLocator
   - UI
+  - IngameUI
+  - PauseUI
+  - MainPause
+  - HowToPlayPause
   layers:
   - Default
   - TransparentFX

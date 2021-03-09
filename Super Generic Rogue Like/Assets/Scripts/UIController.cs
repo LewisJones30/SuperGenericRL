@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -23,13 +24,17 @@ public class UIController : MonoBehaviour
     [SerializeField]
     GameObject KeySprite;
     Image KeyImage;
-
+    [SerializeField]
+    GameObject IngameCanvasObj;
+    [SerializeField]
+    GameObject PausedCanvasObj;
     void Start()
     {
         TurnsRemainingText = TurnsRemainingUI.GetComponent<Text>();
         RoomsCompletedText = RoomsCompletedCountUI.GetComponent<Text>();
         KeyImage = KeySprite.GetComponent<Image>();
         KeySprite.SetActive(false);
+        PausedCanvasObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,14 +42,27 @@ public class UIController : MonoBehaviour
     {
         if (!Paused)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Paused = true;
+                ShowPausedUI();
+                return; //Ensure updateUI doesn't run as this will cause crash.
+            }
             UpdateUI();
             //Debugging
         }
         else
         {
-
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Paused = false;
+                ShowInGameUI();
+            }
         }
     }
+
+
+    //==========================================================UI control methods
     void UpdateUI()
     {
         if (TurnsRemainingText != null) //Only one check required - both UI elements will be on the same UI page.
@@ -56,10 +74,62 @@ public class UIController : MonoBehaviour
 
     }
 
+    void ShowPausedUI()
+    {
+        IngameCanvasObj.SetActive(false);
+        PausedCanvasObj.SetActive(true);
+        ShowUIElements("HowToPlayPause", "MainPause");
+    }
+    void ShowInGameUI()
+    {
+        IngameCanvasObj.SetActive(true);
+        PausedCanvasObj.SetActive(false);
+    }
+
+
+    //Button callers
+    public void ResumeGame() //Callable by buttons
+    {
+        if (IngameCanvasObj.activeSelf)
+        {
+            return;
+        }
+        else
+        {
+            ShowInGameUI();
+            Paused = false;
+        }
+    }
+    public void ShowUIElements(string hideTag, string showTag) //Used with the in-game pause menu
+    {
+        foreach (GameObject obj in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
+        {
+            if (obj.tag == hideTag)
+            {
+                obj.SetActive(false);
+            }
+            if (obj.tag == showTag)
+            {
+                obj.SetActive(true);
+            }
+        }
+    }
+
+
+
+
+
+
     public void EnableKeySprite() //Called by key when player collides with key
     {
         KeySprite.SetActive(true);
     }
+
+
+
+
+
+
 
     //Public getters
     public int getRoomCompletedCount()
@@ -85,11 +155,11 @@ public class UIController : MonoBehaviour
     {
         TurnsRemaining += TURNS_GRANTED_ROOM_COMPLETION;
     }
-    public void addTurnsRemaining(int value)
+    public void addTurnsRemaining(int value) //Overload - pass in a value instead if needed as an additional feature.
     {
         TurnsRemaining += value;
     }
-    public void subTurnsRemaining(int value)
+    public void subTurnsRemaining(int value) //Subtract value from turns remaining. Usually 1. Mud can do 2.
     {
         TurnsRemaining -= value;
     }
