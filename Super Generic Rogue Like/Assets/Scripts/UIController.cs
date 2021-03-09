@@ -28,6 +28,9 @@ public class UIController : MonoBehaviour
     GameObject IngameCanvasObj;
     [SerializeField]
     GameObject PausedCanvasObj;
+    [SerializeField]
+    GameObject KeyNotUnlocked;
+    Text KeyUnlockText;
     void Start()
     {
         TurnsRemainingText = TurnsRemainingUI.GetComponent<Text>();
@@ -35,6 +38,7 @@ public class UIController : MonoBehaviour
         KeyImage = KeySprite.GetComponent<Image>();
         KeySprite.SetActive(false);
         PausedCanvasObj.SetActive(false);
+        KeyNotUnlocked.SetActive(false);
     }
 
     // Update is called once per frame
@@ -115,21 +119,23 @@ public class UIController : MonoBehaviour
         }
     }
 
+    //Public methods
 
-
-
-
-
+    public void EnableUIKeyText()
+    {
+        KeyNotUnlocked.SetActive(true);
+    }
+    public void DisableUIKeyText()
+    {
+        if (KeyNotUnlocked.activeSelf)
+        {
+            KeyNotUnlocked.SetActive(false);
+        }    
+    }
     public void EnableKeySprite() //Called by key when player collides with key
     {
         KeySprite.SetActive(true);
     }
-
-
-
-
-
-
 
     //Public getters
     public int getRoomCompletedCount()
