@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool Turn = true;
     int movedCount = 0;
+    bool KeyObtained = false;
     // Start is called before the first frame update
 
 
@@ -55,11 +56,22 @@ public class PlayerMovement : MonoBehaviour
         }
         Turn = value;
     }
+
+    public void setKeyObtained(bool value)
+    {
+        KeyObtained = value;
+    }
+
     public bool getTurn()
     {
         return Turn;
     }
-
+    
+    public bool getKeyObtained()
+    {
+        return KeyObtained;
+    }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
