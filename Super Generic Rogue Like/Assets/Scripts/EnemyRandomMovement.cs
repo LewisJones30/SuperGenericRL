@@ -22,7 +22,7 @@ public class EnemyRandomMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.getTurn())
+        if (Player.getTurn() && dead == false)
         {
             moved = false;
             Player.setEnemyDead(false);
