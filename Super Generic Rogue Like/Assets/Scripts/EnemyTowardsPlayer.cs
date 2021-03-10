@@ -8,20 +8,28 @@ public class EnemyTowardsPlayer : MonoBehaviour
     GameObject player;
     PlayerMovement playerMove;
     RaycastHit2D hit;
+    [SerializeField]
+    Sprite[] sprites = new Sprite[2]; //Sprite 0 is default state, sprite 1 is dead.
+    bool dead = false;
+    bool moved = false;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerMove = player.GetComponent<PlayerMovement>();
+        playerMove.setEnemyDead(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         int Roll;
-
-
-        if (player != null && !playerMove.getTurn())
+        if (playerMove.getTurn())
+        {
+            moved = false;
+            playerMove.setEnemyDead(false); //As the enemy is still alive, reset the "enemy dead", incase another enemy triggers it.
+        }
+        if (player != null && !playerMove.getTurn() && dead == false && moved == false)
         {
             Roll = Random.Range(0, 2);
             Vector3 Gap = transform.position - player.transform.position;
@@ -43,12 +51,16 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     if (hit.collider.gameObject.tag == "BlockTerrain")
                                     {
                                         transform.position += Vector3.up;
+                                        playerMove.delaySetTurn();
+                                        moved = true;
                                         return;
                                     }
                                 }
                                 else
                                 {
                                     transform.position += Vector3.down;
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
 
@@ -56,7 +68,8 @@ public class EnemyTowardsPlayer : MonoBehaviour
                         }
                         transform.position += Vector3.right;
                         Debug.Log(0);
-                        playerMove.setTurn(true);
+                        playerMove.delaySetTurn();
+                        moved = true;
                         return;
                     }
                     if (Gap.y > 0)
@@ -67,12 +80,14 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             {
                                 transform.position += Vector3.down;
                                 Debug.Log("2");
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                             transform.position += Vector3.right;
                             Debug.Log("1");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                         else
@@ -80,12 +95,14 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //If the down is blocked, go right.
                             {
                                 transform.position += Vector3.right;
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                             transform.position += Vector3.down;
                             Debug.Log("2");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     }
@@ -96,12 +113,14 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.5f)) //If the right is blocked, go up.
                             {
                                 transform.position += Vector3.up;
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                             transform.position += Vector3.right;
                             Debug.Log("3");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                         else
@@ -109,12 +128,14 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.5f)) //If the up is blocked, go right.
                             {
                                 transform.position += Vector3.up;
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                             transform.position += Vector3.up;
                             Debug.Log("4");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     }
@@ -131,20 +152,23 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.up;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             else
                             {
                                 transform.position += Vector3.down;
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                         }
                         transform.position += Vector3.left;
                         Debug.Log("5");
-                        playerMove.setTurn(true);
+                        playerMove.delaySetTurn();
+                        moved = true;
                         return;
                     }
 
@@ -157,13 +181,15 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.down;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             transform.position += Vector3.left;
                             Debug.Log("6");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                         else
@@ -173,13 +199,15 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.left;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             transform.position += Vector3.down;
                             Debug.Log("7");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     }
@@ -192,13 +220,15 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.up;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             transform.position += Vector3.left;
                             Debug.Log("8");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                         else
@@ -208,13 +238,15 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.left;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             transform.position += Vector3.up;
                             Debug.Log("9");
-                            playerMove.setTurn(true);
+                            playerMove.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     }
@@ -234,21 +266,24 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.right;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             else
                             {
                                 transform.position += Vector3.left;
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                         }
                     }
                     transform.position += Vector3.down;
                     Debug.Log("10");
-                    playerMove.setTurn(true);
+                    playerMove.delaySetTurn();
+                    moved = true;
                     return;
                 }
                 else
@@ -262,21 +297,24 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 if (hit.collider.gameObject.tag == "BlockTerrain")
                                 {
                                     transform.position += Vector3.right;
-                                    playerMove.setTurn(true);
+                                    playerMove.delaySetTurn();
+                                    moved = true;
                                     return;
                                 }
                             }
                             else
                             {
                                 transform.position += Vector3.left;
-                                playerMove.setTurn(true);
+                                playerMove.delaySetTurn();
+                                moved = true;
                                 return;
                             }
                         }
                     }
                     transform.position += Vector3.up;
                     Debug.Log("11");
-                    playerMove.setTurn(true);
+                    playerMove.delaySetTurn();
+                    moved = true;
                     return;
                 }
 
@@ -288,10 +326,17 @@ public class EnemyTowardsPlayer : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
-        if (playerMove.getTurn())
+        if (playerMove.getMoveCount() == 0 && !playerMove.getTurn())
         {
             Debug.Log("Player dead!");
             playerMove.PlayerKilled();
         }
+        
+    }
+    public void killedState()
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
+        dead = true;
+
     }
 }

@@ -18,9 +18,14 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit2D hit;
     bool isDead = false;
     bool turnSwapDelay = false;
+    bool enemyDead = false;
+
+    [SerializeField]
+    Sprite[] Sprites = new Sprite[3]; //Slot 1 is default player, Slot 2 is player in mud, Slot 3 is dead player.
     void Start()
     {
         UIController = UI.GetComponent<UIController>();
+        gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[0];
     }
 
     // Update is called once per frame
@@ -31,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+
         if (Turn && movedCount < 2 && isDead == false && turnSwapDelay == false) //Check if it is their turn, they aren't dead and the delay between enemy movement isn't active.
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -46,16 +52,18 @@ public class PlayerMovement : MonoBehaviour
                     {
                         return;
                     }
-                    if (getKeyObtained())
+                    if (hit.collider.gameObject.tag == "Door")
                     {
-                        //Next room
-                        UIController.addTurnsRemaining();
-                        UIController.addRoomsCompleted(1);
-                        UIController.DisableUIKeyText();
-                    }
-                    else
-                    {
-                        UIController.EnableUIKeyText();
+                        if (getKeyObtained())
+                        {
+                            //Next room
+                            UIController.addTurnsRemaining();
+                            UIController.addRoomsCompleted(1);
+                        }
+                        else
+                        {
+                            UIController.EnableUIKeyText();
+                        }
                     }
                 }
                 transform.position += Vector3.up;
@@ -77,15 +85,18 @@ public class PlayerMovement : MonoBehaviour
                     {
                         return;
                     }
-                    if (getKeyObtained())
+                    if (hit.collider.gameObject.tag == "Door")
                     {
-                        //Next room
-                        UIController.addTurnsRemaining();
-                        UIController.addRoomsCompleted(1);
-                    }
-                    else
-                    {
-                        UIController.EnableUIKeyText();
+                        if (getKeyObtained())
+                        {
+                            //Next room
+                            UIController.addTurnsRemaining();
+                            UIController.addRoomsCompleted(1);
+                        }
+                        else
+                        {
+                            UIController.EnableUIKeyText();
+                        }
                     }
                 }
                 transform.position += Vector3.left;
@@ -106,15 +117,18 @@ public class PlayerMovement : MonoBehaviour
                     {
                         return;
                     }
-                    if (getKeyObtained())
+                    if (hit.collider.gameObject.tag == "Door")
                     {
-                        //Next room
-                        UIController.addTurnsRemaining();
-                        UIController.addRoomsCompleted(1);
-                    }
-                    else
-                    {
-                        UIController.EnableUIKeyText();
+                        if (getKeyObtained())
+                        {
+                            //Next room
+                            UIController.addTurnsRemaining();
+                            UIController.addRoomsCompleted(1);
+                        }
+                        else
+                        {
+                            UIController.EnableUIKeyText();
+                        }
                     }
                 }
                 transform.position += Vector3.down;
@@ -154,14 +168,26 @@ public class PlayerMovement : MonoBehaviour
                 UIController.subTurnsRemaining(1);
                 UIController.DisableUIKeyText();
             }
+            if (movedCount == 1)
+            {
+                gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[1];
+            }
             if (movedCount == 2)
             {
+                gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[0];
+                if (enemyDead)
+                {
+                    movedCount = 0;
+                    return;
+                }
                 turnSwapDelay = true;
                 StartCoroutine(setTurnDelayed(0.5f));
                 movedCount = 0;
+                
             }
             if (UIController.getTurnsRemaining() == 0)
             {
+
                 PlayerDead();
             }
         }
@@ -171,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
     void PlayerDead()
     {
         //code when player dies.
+        gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[2];
 
         //Play death animation.
         GameObject.Find("GameOverText").GetComponent<Text>().enabled = true;
@@ -185,7 +212,9 @@ public class PlayerMovement : MonoBehaviour
         i.GetComponent<Text>().enabled = false;
         UIController.EnableGameOverCanvas();
     }
-
+    
+    
+    
     //Private sets
     IEnumerator setTurnDelayed(float delayTime)
     {
@@ -213,6 +242,10 @@ public class PlayerMovement : MonoBehaviour
         KeyObtained = value;
     }
 
+    public void setEnemyDead(bool value)
+    {
+        enemyDead = value;
+    }
     //Public gets
     public bool getTurn()
     {
@@ -226,6 +259,10 @@ public class PlayerMovement : MonoBehaviour
     {
         return KeyObtained;
     }
+    public int getMoveCount()
+    {
+        return movedCount;
+    }
     
     //Public calls
 
@@ -233,8 +270,16 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerDead();
     }
-
-
+    public void delaySetTurn()
+    {
+        StartCoroutine(setTurnDelayed());
+    }
+    IEnumerator setTurnDelayed()
+    {
+        yield return new WaitForSeconds(0.05f);
+        setTurn(true);
+        turnSwapDelay = false;
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -242,7 +287,15 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (movedCount > 0 && collision.gameObject.tag == "EnemyRandom" || collision.gameObject.tag == "EnemyLocator")
         {
-            Destroy(collision.gameObject);
+            if (collision.gameObject.GetComponent<EnemyRandomMovement>() != null)
+            {
+                collision.gameObject.GetComponent<EnemyRandomMovement>().killedState();
+            }
+            else
+            {
+                collision.gameObject.GetComponent<EnemyTowardsPlayer>().killedState();
+            }
+            setEnemyDead(true);
         }
         if (collision.gameObject.tag == "Mud")
         {

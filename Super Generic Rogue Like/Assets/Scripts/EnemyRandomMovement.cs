@@ -7,16 +7,27 @@ public class EnemyRandomMovement : MonoBehaviour
     PlayerMovement Player;
     System.Random Rand = new System.Random();
     RaycastHit2D hit;
+    [SerializeField]
+    Sprite[] sprites = new Sprite[2];
+    bool dead = false;
+    bool moved = false;
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        moved = false;
+        dead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!Player.getTurn())
+        if (Player.getTurn())
+        {
+            moved = false;
+            Player.setEnemyDead(false);
+        }
+        if (!Player.getTurn() && dead == false && moved == false)
         {
             while (!Player.getTurn())
             {
@@ -33,7 +44,8 @@ public class EnemyRandomMovement : MonoBehaviour
                                 }
                             }
                             transform.position += Vector3.up;
-                            Player.setTurn(true);
+                            Player.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     case 1:
@@ -46,7 +58,8 @@ public class EnemyRandomMovement : MonoBehaviour
                                 }
                             }
                             transform.position += Vector3.left;
-                            Player.setTurn(true);
+                            Player.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     case 2:
@@ -59,7 +72,8 @@ public class EnemyRandomMovement : MonoBehaviour
                                 }
                             }
                             transform.position += Vector3.down;
-                            Player.setTurn(true);
+                            Player.delaySetTurn();
+                            moved = true;
                             return;
                         }
                     case 3:
@@ -72,7 +86,8 @@ public class EnemyRandomMovement : MonoBehaviour
                                 }
                             }
                             transform.position += Vector3.right;
-                            Player.setTurn(true);
+                            Player.delaySetTurn();
+                            moved = true;
                             return;
                         }
                 }
@@ -83,10 +98,17 @@ public class EnemyRandomMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
-        if (Player.getTurn())
+        if (Player.getMoveCount() == 0 && !Player.getTurn())
         {
             Debug.Log("Player dead!");
             Player.PlayerKilled();
         }
+
+    }
+    public void killedState()
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
+        dead = true;
+
     }
 }
