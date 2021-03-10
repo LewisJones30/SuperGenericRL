@@ -38,7 +38,7 @@ public class EnemyRandomMovement : MonoBehaviour
                         {
                             if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.5f))
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     return;
                                 }
@@ -52,7 +52,7 @@ public class EnemyRandomMovement : MonoBehaviour
                         {
                             if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.5f))
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     return;
                                 }
@@ -66,7 +66,7 @@ public class EnemyRandomMovement : MonoBehaviour
                         {
                             if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f))
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     return;
                                 }
@@ -80,7 +80,7 @@ public class EnemyRandomMovement : MonoBehaviour
                         {
                             if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.5f))
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     return;
                                 }
