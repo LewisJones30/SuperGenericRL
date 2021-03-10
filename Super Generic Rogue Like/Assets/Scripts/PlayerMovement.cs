@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     GameObject UI;
     UIController UIController;
     RaycastHit2D hit;
+    bool isDead = false;
+    bool turnSwapDelay = false;
     void Start()
     {
         UIController = UI.GetComponent<UIController>();
@@ -28,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (Turn && movedCount < 2) //Check if it is the player's turn to move.
+        if (Turn && movedCount < 2 && isDead == false && turnSwapDelay == false) //Check if it is their turn, they aren't dead and the delay between enemy movement isn't active.
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -153,16 +156,42 @@ public class PlayerMovement : MonoBehaviour
             }
             if (movedCount == 2)
             {
+                turnSwapDelay = true;
                 StartCoroutine(setTurnDelayed(0.5f));
                 movedCount = 0;
             }
+            if (UIController.getTurnsRemaining() == 0)
+            {
+                PlayerDead();
+            }
         }
     }
+
+
+    void PlayerDead()
+    {
+        //code when player dies.
+
+        //Play death animation.
+        GameObject.Find("GameOverText").GetComponent<Text>().enabled = true;
+        isDead = true;
+        StartCoroutine("PlayerDeadAnims");
+    }
+    IEnumerator PlayerDeadAnims()
+    {
+        GameObject i = GameObject.Find("GameOverText");
+        i.GetComponent<Text>().enabled = true;
+        yield return new WaitForSeconds(5f);
+        i.GetComponent<Text>().enabled = false;
+        UIController.EnableGameOverCanvas();
+    }
+
     //Private sets
     IEnumerator setTurnDelayed(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
         setTurn(false);
+        turnSwapDelay = false;
     }
     void setStuckInMud(bool value)
     {
@@ -198,6 +227,16 @@ public class PlayerMovement : MonoBehaviour
         return KeyObtained;
     }
     
+    //Public calls
+
+    public void PlayerKilled() //Called by enemy when the enemy "defeats" the player.
+    {
+        PlayerDead();
+    }
+
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);

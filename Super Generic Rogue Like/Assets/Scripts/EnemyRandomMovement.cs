@@ -86,7 +86,7 @@ public class EnemyRandomMovement : MonoBehaviour
         if (Player.getTurn())
         {
             Debug.Log("Player dead!");
-            Destroy(collision.gameObject);
+            Player.PlayerKilled();
         }
     }
 }

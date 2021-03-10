@@ -31,6 +31,10 @@ public class UIController : MonoBehaviour
     [SerializeField]
     GameObject KeyNotUnlocked;
     Text KeyUnlockText;
+    [SerializeField]
+    GameObject GameOverCanvas;
+    [SerializeField]
+    GameObject GameOverRoomsCompletedText;
     void Start()
     {
         TurnsRemainingText = TurnsRemainingUI.GetComponent<Text>();
@@ -136,7 +140,20 @@ public class UIController : MonoBehaviour
     {
         KeySprite.SetActive(true);
     }
-
+    public void EnableGameOverCanvas()
+    {
+        IngameCanvasObj.SetActive(false);
+        GameOverCanvas.SetActive(true);
+        if (getRoomCompletedCount() == 0)
+        {
+            GameOverRoomsCompletedText.GetComponent<Text>().text = "No rooms completed. Better luck next time!";
+            GameOverRoomsCompletedText.GetComponent<Text>().fontSize = 75;
+        }
+        else
+        {
+            GameOverRoomsCompletedText.GetComponent<Text>().text = "You completed" + getRoomCompletedCount() + " rooms!";
+        }
+    }
     //Public getters
     public int getRoomCompletedCount()
     {
