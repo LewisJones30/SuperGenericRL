@@ -25,7 +25,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
     void Update()
     {
         int Roll;
-        if (playerMove.getTurn())
+        if (playerMove.getTurn() && dead == false)
         {
             moved = false;
             playerMove.setEnemyDead(false); //As the enemy is still alive, reset the "enemy dead", incase another enemy triggers it.
