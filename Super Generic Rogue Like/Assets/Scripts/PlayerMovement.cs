@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     bool turnSwapDelay = false;
     bool enemyDead = false;
 
+    public loadNewRoom loadRoom;
+
     [SerializeField]
     Sprite[] Sprites = new Sprite[3]; //Slot 1 is default player, Slot 2 is player in mud, Slot 3 is dead player.
     void Start()
@@ -92,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
                             //Next room
                             UIController.addTurnsRemaining();
                             UIController.addRoomsCompleted(1);
+                           
                         }
                         else
                         {
@@ -156,6 +159,8 @@ public class PlayerMovement : MonoBehaviour
                             //Next room
                             UIController.addTurnsRemaining();
                             UIController.addRoomsCompleted(1);
+                            Debug.Log("here 1");
+                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
                         }
                         else
                         {
