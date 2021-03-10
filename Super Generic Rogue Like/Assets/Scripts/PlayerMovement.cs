@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
                     movedCount += 1;
                     setStuckInMud(false);
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.5f))
+                if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.1f))
                 {
                     if (hit.collider.gameObject.tag == "BlockTerrain")
                     {
@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
                     movedCount += 1;
                     setStuckInMud(false);
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.5f))
+                if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.1f))
                 {
                     Debug.DrawLine(transform.position, transform.position + (1 / 2 * Vector3.left), Color.white);
                     if (hit.collider.gameObject.tag == "BlockTerrain")
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
                     movedCount += 1;
                     setStuckInMud(false);
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f))
+                if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.1f))
                 {
                     if (hit.collider.gameObject.tag == "BlockTerrain")
                     {
@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
                     movedCount += 1;
                     setStuckInMud(false);
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.5f))
+                if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.1f))
                 {
                     if (hit.collider.gameObject.tag == "BlockTerrain")
                     {

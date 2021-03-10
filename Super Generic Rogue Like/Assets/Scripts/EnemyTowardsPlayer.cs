@@ -12,6 +12,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
     Sprite[] sprites = new Sprite[2]; //Sprite 0 is default state, sprite 1 is dead.
     bool dead = false;
     bool moved = false;
+    const float RAYCAST_DISTANCE = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,27 +43,25 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     //if y is less than 0, 50/50 whether it moves right X direction or up Y direction.
                     if (Gap.y == 0)
                     {
-                        if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.5f))
+                        if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, RAYCAST_DISTANCE))
                         {
-                            if (hit.collider.gameObject.tag == "BlockTerrain") //if the player is directly to the right, but behind terrain, check if up or down is free.
+                            if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator") //if the player is directly to the right, but behind terrain, check if up or down is free.
                             {
-                                if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //Prefer going down, if down is blocked, go up.
+                                if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, RAYCAST_DISTANCE)) //Prefer going down, if down is blocked, go up.
                                 {
-                                    if (hit.collider.gameObject.tag == "BlockTerrain")
+                                    if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                     {
                                         transform.position += Vector3.up;
+                                        Debug.Log("16");
                                         playerMove.delaySetTurn();
                                         moved = true;
                                         return;
                                     }
                                 }
-                                else
-                                {
-                                    transform.position += Vector3.down;
-                                    playerMove.delaySetTurn();
-                                    moved = true;
-                                    return;
-                                }
+                                transform.position += Vector3.down;
+                                playerMove.delaySetTurn();
+                                moved = true;
+                                return;
 
                             }
                         }
@@ -76,13 +75,18 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     {
                         if (Roll == 0)
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.5f)) //if the right is blocked, go down.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, RAYCAST_DISTANCE)) //if the right is blocked, go down.
                             {
-                                transform.position += Vector3.down;
-                                Debug.Log("2");
-                                playerMove.delaySetTurn();
-                                moved = true;
-                                return;
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
+                                {
+                                    transform.position += Vector3.down;
+                                    Debug.Log("2");
+                                    playerMove.delaySetTurn();
+                                    moved = true;
+                                    return;
+
+                                }
+                                  
                             }
                             transform.position += Vector3.right;
                             Debug.Log("1");
@@ -92,12 +96,15 @@ public class EnemyTowardsPlayer : MonoBehaviour
                         }
                         else
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //If the down is blocked, go right.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, RAYCAST_DISTANCE)) //If the down is blocked, go right.
                             {
-                                transform.position += Vector3.right;
-                                playerMove.delaySetTurn();
-                                moved = true;
-                                return;
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
+                                {
+                                    transform.position += Vector3.right;
+                                    playerMove.delaySetTurn();
+                                    moved = true;
+                                    return;
+                                }
                             }
                             transform.position += Vector3.down;
                             Debug.Log("2");
@@ -110,12 +117,16 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     {
                         if (Roll == 0)
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.5f)) //If the right is blocked, go up.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, RAYCAST_DISTANCE)) //If the right is blocked, go up.
                             {
-                                transform.position += Vector3.up;
-                                playerMove.delaySetTurn();
-                                moved = true;
-                                return;
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
+                                {
+                                    transform.position += Vector3.up;
+                                    Debug.Log("15");
+                                    playerMove.delaySetTurn();
+                                    moved = true;
+                                    return;
+                                }
                             }
                             transform.position += Vector3.right;
                             Debug.Log("3");
@@ -125,12 +136,15 @@ public class EnemyTowardsPlayer : MonoBehaviour
                         }
                         else
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.5f)) //If the up is blocked, go right.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, RAYCAST_DISTANCE)) //If the up is blocked, go right.
                             {
-                                transform.position += Vector3.up;
-                                playerMove.delaySetTurn();
-                                moved = true;
-                                return;
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
+                                {
+                                    transform.position += Vector3.right;
+                                    playerMove.delaySetTurn();
+                                    moved = true;
+                                    return;
+                                }
                             }
                             transform.position += Vector3.up;
                             Debug.Log("4");
@@ -143,42 +157,13 @@ public class EnemyTowardsPlayer : MonoBehaviour
                 }
                 else //x > 0
                 {
-                    if (Gap.y == 0)
-                    {
-                        if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.5f)) //If the left is blocked, check if down is blocked. 
-                        {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //Prefer going down, if down is blocked, go up.
-                            {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
-                                {
-                                    transform.position += Vector3.up;
-                                    playerMove.delaySetTurn();
-                                    moved = true;
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                transform.position += Vector3.down;
-                                playerMove.delaySetTurn();
-                                moved = true;
-                                return;
-                            }
-                        }
-                        transform.position += Vector3.left;
-                        Debug.Log("5");
-                        playerMove.delaySetTurn();
-                        moved = true;
-                        return;
-                    }
-
                     if (Gap.y > 0)
                     {
                         if (Roll == 0)
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.5f)) //if left is blocked, go down.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, RAYCAST_DISTANCE)) //if left is blocked, go down.
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     transform.position += Vector3.down;
                                     playerMove.delaySetTurn();
@@ -194,9 +179,9 @@ public class EnemyTowardsPlayer : MonoBehaviour
                         }
                         else
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //if down is blocked, go left.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, RAYCAST_DISTANCE)) //if down is blocked, go left.
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     transform.position += Vector3.left;
                                     playerMove.delaySetTurn();
@@ -215,11 +200,12 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     {
                         if (Roll == 0)
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.5f)) //if left is blocked, go up.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, RAYCAST_DISTANCE)) //if left is blocked, go up.
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     transform.position += Vector3.up;
+                                    Debug.Log("14");
                                     playerMove.delaySetTurn();
                                     moved = true;
                                     return;
@@ -233,9 +219,9 @@ public class EnemyTowardsPlayer : MonoBehaviour
                         }
                         else
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.5f)) //if up is blocked, go left.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, RAYCAST_DISTANCE)) //if up is blocked, go left.
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     transform.position += Vector3.left;
                                     playerMove.delaySetTurn();
@@ -252,18 +238,18 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     }
                 }
             }
-            else
+            else // x = 0;
             {
                 //Determine if above or below, move towards.
                 if (Gap.y > 0)
                 {
-                    if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //if down is blocked, check left
+                    if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, RAYCAST_DISTANCE)) //if down is blocked, check left
                     {
-                        if (hit.collider.gameObject.tag == "BlockTerrain")
+                        if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //if left is blocked, go right.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, RAYCAST_DISTANCE)) //if left is blocked, go right.
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     transform.position += Vector3.right;
                                     playerMove.delaySetTurn();
@@ -271,7 +257,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     return;
                                 }
                             }
-                            else
+                            
                             {
                                 transform.position += Vector3.left;
                                 playerMove.delaySetTurn();
@@ -288,13 +274,13 @@ public class EnemyTowardsPlayer : MonoBehaviour
                 }
                 else
                 {
-                    if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.5f)) //if up is blocked, check left.
+                    if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, RAYCAST_DISTANCE)) //if up is blocked, check left.
                     {
-                        if (hit.collider.gameObject.tag == "BlockTerrain")
+                        if (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                         {
-                            if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.5f)) //if left is blocked, go right.
+                            if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, RAYCAST_DISTANCE)) 
                             {
-                                if (hit.collider.gameObject.tag == "BlockTerrain")
+                                if  (hit.collider.gameObject.tag == "BlockTerrain" || hit.collider.gameObject.tag == "EnemyRandom" || hit.collider.gameObject.tag == "EnemyLocator")
                                 {
                                     transform.position += Vector3.right;
                                     playerMove.delaySetTurn();
@@ -302,13 +288,10 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     return;
                                 }
                             }
-                            else
-                            {
-                                transform.position += Vector3.left;
-                                playerMove.delaySetTurn();
-                                moved = true;
-                                return;
-                            }
+                            transform.position += Vector3.left;
+                            playerMove.delaySetTurn();
+                            moved = true;
+                            return;
                         }
                     }
                     transform.position += Vector3.up;
