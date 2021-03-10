@@ -2691,7 +2691,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -563, y: 248}
+  m_AnchoredPosition: {x: -810, y: 248}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569392276
@@ -2716,18 +2716,38 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 35
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Insert lots of text instructions here!!
+  m_Text: 'The main objective is to obtain the key in each room to move onto the
+    next room.
+
+    You will move twice, and then the enemy will move once.
+
+    Be
+    aware that some enemies move randomly, while others will walk towards you!
+
+    For
+    each room you complete, you will gain a set amount of extra turns.
+
+    If you
+    run out of turns, or the enemy touches you, the game is over!
+
+
+    Controls:
+
+    WASD
+    to move your character.
+
+    Escape to pause.'
 --- !u!222 &1569392277
 CanvasRenderer:
   m_ObjectHideFlags: 0
