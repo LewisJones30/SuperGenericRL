@@ -140,6 +140,11 @@ public class UIController : MonoBehaviour
     {
         KeySprite.SetActive(true);
     }
+    public void DisableKeySprite()
+    {
+        KeySprite.SetActive(false);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().setKeyObtained(false);
+    }
     public void EnableGameOverCanvas()
     {
         IngameCanvasObj.SetActive(false);

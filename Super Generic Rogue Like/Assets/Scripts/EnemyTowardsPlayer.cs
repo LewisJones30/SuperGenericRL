@@ -320,6 +320,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
         dead = true;
+        playerMove.setEnemyDead(true);
 
     }
 }

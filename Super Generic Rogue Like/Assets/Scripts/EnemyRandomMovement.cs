@@ -109,6 +109,6 @@ public class EnemyRandomMovement : MonoBehaviour
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
         dead = true;
-
+        Player.setEnemyDead(true);
     }
 }

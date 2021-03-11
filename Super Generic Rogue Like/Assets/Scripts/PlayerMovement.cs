@@ -38,7 +38,10 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
+        if (enemyDead = true && !getTurn())
+        {
+            setTurn(true);
+        }
         if (Turn && movedCount < 2 && isDead == false && turnSwapDelay == false) //Check if it is their turn, they aren't dead and the delay between enemy movement isn't active.
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -161,6 +164,7 @@ public class PlayerMovement : MonoBehaviour
                             UIController.addRoomsCompleted(1);
                             Debug.Log("here 1");
                             loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                            UIController.DisableKeySprite();
                         }
                         else
                         {
@@ -177,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[1];
             }
-            if (movedCount == 2)
+            if (movedCount >= 2)
             {
                 gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[0];
                 if (enemyDead)
@@ -290,9 +294,9 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
-        if (movedCount > 0 && collision.gameObject.tag == "EnemyRandom" || collision.gameObject.tag == "EnemyLocator")
+        if ((movedCount > 0 || turnSwapDelay) && collision.gameObject.tag == "EnemyRandom" || collision.gameObject.tag == "EnemyLocator")
         {
-            if (collision.gameObject.GetComponent<EnemyRandomMovement>() != null)
+            if (collision.gameObject.tag == "EnemyRandom")
             {
                 collision.gameObject.GetComponent<EnemyRandomMovement>().killedState();
             }
