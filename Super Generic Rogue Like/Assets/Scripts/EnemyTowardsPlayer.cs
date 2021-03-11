@@ -10,7 +10,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
     RaycastHit2D hit;
     [SerializeField]
     Sprite[] sprites = new Sprite[2]; //Sprite 0 is default state, sprite 1 is dead.
-    bool dead = false;
+    public bool dead = false;
     bool moved = false;
     const float RAYCAST_DISTANCE = 0.2f;
     // Start is called before the first frame update

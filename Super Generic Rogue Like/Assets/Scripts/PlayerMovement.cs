@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     GameObject UI;
     UIController UIController;
     RaycastHit2D hit;
-    bool isDead = false;
+    public bool isDead = false;
     bool turnSwapDelay = false;
     bool enemyDead = false;
 
@@ -231,12 +231,12 @@ public class PlayerMovement : MonoBehaviour
             }
             if (movedCount == 1)
             {
-                gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[1];
+                //gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[1];
             }
             if (movedCount == 2)
             {
 
-                gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[0];
+                //gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[0];
                 if (enemyDead)
                 {
                     movedCount = 0;

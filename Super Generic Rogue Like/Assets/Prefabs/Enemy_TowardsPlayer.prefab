@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8763324524610411024}
   - component: {fileID: 8763324524610411026}
   - component: {fileID: 8763324524610411027}
+  - component: {fileID: 1787571607857196858}
   m_Layer: 0
   m_Name: Enemy_TowardsPlayer
   m_TagString: EnemyLocator
@@ -125,3 +126,20 @@ MonoBehaviour:
   sprites:
   - {fileID: 2572365745140355499, guid: 34c7cbe039ab2b14c8843c42fdbee6e8, type: 3}
   - {fileID: 3471344404005203423, guid: 34c7cbe039ab2b14c8843c42fdbee6e8, type: 3}
+--- !u!114 &1787571607857196858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763324524610411030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16babb5acfb26d649a24eecb7689ae54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 2572365745140355499, guid: 34c7cbe039ab2b14c8843c42fdbee6e8, type: 3}
+  - {fileID: -5757044122727447524, guid: 34c7cbe039ab2b14c8843c42fdbee6e8, type: 3}
+  timer: 0
+  timerRounded: 0
