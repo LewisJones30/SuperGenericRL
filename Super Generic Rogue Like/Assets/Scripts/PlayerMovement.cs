@@ -33,12 +33,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("EnemyDead: " + enemyDead);
         //Check if game is paused, if paused, do not allow movement
         if (UIController.getPaused())
         {
             return;
         }
-        if (enemyDead = true && !getTurn())
+        if (enemyDead == true && !getTurn())
         {
             setTurn(true);
         }
@@ -181,8 +182,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[1];
             }
-            if (movedCount >= 2)
+            if (movedCount == 2)
             {
+
                 gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[0];
                 if (enemyDead)
                 {
@@ -190,8 +192,7 @@ public class PlayerMovement : MonoBehaviour
                     return;
                 }
                 turnSwapDelay = true;
-                StartCoroutine(setTurnDelayed(0.5f));
-                movedCount = 0;
+                StartCoroutine(setTurnDelayed(0.15f));
                 
             }
             if (UIController.getTurnsRemaining() == 0)
@@ -230,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
         setTurn(false);
         turnSwapDelay = false;
+        movedCount = 3;
     }
     void setStuckInMud(bool value)
     {
@@ -288,13 +290,22 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         setTurn(true);
         turnSwapDelay = false;
+        movedCount = 0;
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDead == true)
+        {
+            return;
+        }
+        if (!getTurn())
+        {
+            return;
+        }
         Debug.Log(collision.gameObject.name);
-        if ((movedCount > 0 || turnSwapDelay) && collision.gameObject.tag == "EnemyRandom" || collision.gameObject.tag == "EnemyLocator")
+        if (collision.gameObject.tag == "EnemyRandom" || collision.gameObject.tag == "EnemyLocator")
         {
             if (collision.gameObject.tag == "EnemyRandom")
             {

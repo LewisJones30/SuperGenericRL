@@ -98,7 +98,7 @@ public class EnemyRandomMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
-        if (Player.getMoveCount() == 0 && !Player.getTurn())
+        if (Player.getMoveCount() == 3 && dead == false) 
         {
             Debug.Log("Player dead!");
             Player.PlayerKilled();

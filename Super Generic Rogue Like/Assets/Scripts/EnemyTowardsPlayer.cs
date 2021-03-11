@@ -309,7 +309,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
-        if (playerMove.getMoveCount() == 0 && !playerMove.getTurn())
+        if (playerMove.getMoveCount() == 3 && dead == false)
         {
             Debug.Log("Player dead!");
             playerMove.PlayerKilled();

@@ -21,6 +21,7 @@ public class loadNewRoom : MonoBehaviour
     {
         keyLoadedCorrectly = false;
         roomClearCount = roomsCleared;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().setEnemyDead(false);
         GameObject test = Instantiate(mapTiles[Random.Range(0, mapTiles.Length)], new Vector3(roomsCleared * 12, 0, 0), Quaternion.identity);
         //Debug.Log("here 2");
         while (!keyLoadedCorrectly)
