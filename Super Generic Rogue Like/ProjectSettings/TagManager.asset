@@ -15,6 +15,7 @@ TagManager:
   - HowToPlayPause
   - BlockTerrain
   - Key
+  - Mud
   layers:
   - Default
   - TransparentFX

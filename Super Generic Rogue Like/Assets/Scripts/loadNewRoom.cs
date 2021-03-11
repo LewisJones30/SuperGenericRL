@@ -90,7 +90,7 @@ public class loadNewRoom : MonoBehaviour
     }
     private void Update()
     {
-        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, new Vector3(roomClearCount * 12, 0f, -10f), Time.deltaTime);
+        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, new Vector3(roomClearCount * 12, 0f, -10f), Time.deltaTime *3);
 
        // mainCam.transform.position = new Vector3(roomClearCount * 12, 0, -10);
     }
