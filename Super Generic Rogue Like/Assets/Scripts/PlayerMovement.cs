@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isDead = false;
     bool turnSwapDelay = false;
     bool enemyDead = false;
-
+    [SerializeField]
+    AudioClip[] audio = new AudioClip[4];
     public loadNewRoom loadRoom;
 
     [SerializeField]
@@ -54,44 +55,53 @@ public class PlayerMovement : MonoBehaviour
                 {
                     movedCount += 1;
                     setStuckInMud(false);
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.1f))
+                else
                 {
-                    if (hit.collider.gameObject.tag == "BlockTerrain")
+                    if (hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.1f))
                     {
-                        return;
-                    }
-                    if (hit.collider.gameObject.tag == "Door")
-                    {
-                        if (getKeyObtained() && enemyDead)
+                        if (hit.collider.gameObject.tag == "BlockTerrain")
                         {
-                            //Next room
-                            UIController.addTurnsRemaining();
-                            UIController.addRoomsCompleted(1);
-                            Debug.Log("here 1");
-                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
-                            UIController.DisableKeySprite();
+                            return;
                         }
-                        else
+                        if (hit.collider.gameObject.tag == "Door")
                         {
-                            if (!enemyDead)
+                            if (getKeyObtained() && enemyDead)
                             {
-                                UIController.EnableUIKeyText(0);
+                                //Next room
+                                UIController.addTurnsRemaining();
+                                UIController.addRoomsCompleted(1);
+                                Debug.Log("here 1");
+                                loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                                UIController.DisableKeySprite();
+                                playNewRoom();
                             }
                             else
                             {
+                                if (!enemyDead)
+                                {
+                                    UIController.EnableUIKeyText(0);
+                                }
+                                else
+                                {
 
+                                }
+                                UIController.EnableUIKeyText(1);
+
+                                return;
                             }
-                            UIController.EnableUIKeyText(1);
-
-                            return;
                         }
                     }
+                    transform.position += Vector3.up;
+                    movedCount += 1;
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                transform.position += Vector3.up;
-                movedCount += 1;
-                UIController.subTurnsRemaining(1);
-                UIController.DisableUIKeyText();
+               
             }
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -99,45 +109,27 @@ public class PlayerMovement : MonoBehaviour
                 {
                     movedCount += 1;
                     setStuckInMud(false);
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.1f))
+                else
                 {
-                    Debug.DrawLine(transform.position, transform.position + (1 / 2 * Vector3.left), Color.white);
-                    if (hit.collider.gameObject.tag == "BlockTerrain")
+                    if (hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.1f))
                     {
-                        return;
-                    }
-                    if (hit.collider.gameObject.tag == "Door")
-                    {
-                        if (getKeyObtained() && enemyDead)
+                        Debug.DrawLine(transform.position, transform.position + (1 / 2 * Vector3.left), Color.white);
+                        if (hit.collider.gameObject.tag == "BlockTerrain")
                         {
-                            //Next room
-                            UIController.addTurnsRemaining();
-                            UIController.addRoomsCompleted(1);
-                            Debug.Log("here 1");
-                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
-                            UIController.DisableKeySprite();
-                        }
-                        else
-                        {
-                            if (!enemyDead)
-                            {
-                                UIController.EnableUIKeyText(0);
-                            }
-                            else
-                            {
-
-                            }
-                            UIController.EnableUIKeyText(1);
-
                             return;
                         }
                     }
+                    transform.position += Vector3.left;
+                    movedCount += 1;
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                transform.position += Vector3.left;
-                movedCount += 1;
-                UIController.subTurnsRemaining(1);
-                UIController.DisableUIKeyText();
+                
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -145,44 +137,53 @@ public class PlayerMovement : MonoBehaviour
                 {
                     movedCount += 1;
                     setStuckInMud(false);
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.1f))
+                else
                 {
-                    if (hit.collider.gameObject.tag == "BlockTerrain")
+                    if (hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.1f))
                     {
-                        return;
-                    }
-                    if (hit.collider.gameObject.tag == "Door")
-                    {
-                        if (getKeyObtained() && enemyDead)
+                        if (hit.collider.gameObject.tag == "BlockTerrain")
                         {
-                            //Next room
-                            UIController.addTurnsRemaining();
-                            UIController.addRoomsCompleted(1);
-                            Debug.Log("here 1");
-                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
-                            UIController.DisableKeySprite();
+                            return;
                         }
-                        else
+                        if (hit.collider.gameObject.tag == "Door")
                         {
-                            if (!enemyDead)
+                            if (getKeyObtained() && enemyDead)
                             {
-                                UIController.EnableUIKeyText(0);
+                                //Next room
+                                UIController.addTurnsRemaining();
+                                UIController.addRoomsCompleted(1);
+                                Debug.Log("here 1");
+                                loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                                UIController.DisableKeySprite();
+                                playNewRoom();
                             }
                             else
                             {
+                                if (!enemyDead)
+                                {
+                                    UIController.EnableUIKeyText(0);
+                                }
+                                else
+                                {
 
+                                }
+                                UIController.EnableUIKeyText(1);
+
+                                return;
                             }
-                            UIController.EnableUIKeyText(1);
-
-                            return;
                         }
                     }
+                    transform.position += Vector3.down;
+                    movedCount += 1;
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                transform.position += Vector3.down;
-                movedCount += 1;
-                UIController.subTurnsRemaining(1);
-                UIController.DisableUIKeyText();
+                
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
@@ -190,44 +191,55 @@ public class PlayerMovement : MonoBehaviour
                 {
                     movedCount += 1;
                     setStuckInMud(false);
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
                 }
-                if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.1f))
+                else
                 {
-                    if (hit.collider.gameObject.tag == "BlockTerrain")
+                    if (hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.1f))
                     {
-                        return;
-                    }
-                    if (hit.collider.gameObject.tag == "Door")
-                    {
-                        if (getKeyObtained() && enemyDead)
+
+                        if (hit.collider.gameObject.tag == "BlockTerrain")
                         {
-                            //Next room
-                            UIController.addTurnsRemaining();
-                            UIController.addRoomsCompleted(1);
-                            Debug.Log("here 1");
-                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
-                            UIController.DisableKeySprite();
+                            return;
                         }
-                        else
+                        if (hit.collider.gameObject.tag == "Door")
                         {
-                            if (!enemyDead)
+                            if (getKeyObtained() && enemyDead)
                             {
-                                UIController.EnableUIKeyText(0);
+                                //Next room
+                                UIController.addTurnsRemaining();
+                                UIController.addRoomsCompleted(1);
+                                Debug.Log("here 1");
+                                loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                                UIController.DisableKeySprite();
+                                playNewRoom();
                             }
                             else
                             {
+                                if (!enemyDead)
+                                {
+                                    UIController.EnableUIKeyText(0);
+                                }
+                                else
+                                {
 
+                                }
+                                UIController.EnableUIKeyText(1);
+
+                                return;
                             }
-                            UIController.EnableUIKeyText(1);
-                            
-                            return;
                         }
                     }
+                    transform.position += Vector3.right;
+                    movedCount += 1;
+                    UIController.subTurnsRemaining(1);
+                    UIController.DisableUIKeyText();
+                    playPlayerStep();
+
                 }
-                transform.position += Vector3.right;
-                movedCount += 1;
-                UIController.subTurnsRemaining(1);
-                UIController.DisableUIKeyText();
+                
             }
             if (movedCount == 1)
             {
@@ -327,6 +339,22 @@ public class PlayerMovement : MonoBehaviour
     }
     
     //Public calls
+
+    public void playPlayerStep()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audio[0], 0.7f);
+    }
+    public void playCollectedKey()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audio[1], 0.7f);
+    }
+    public void playNewRoom()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audio[2], 0.7f);
+    }
 
     public void PlayerKilled() //Called by enemy when the enemy "defeats" the player.
     {

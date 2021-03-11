@@ -11,6 +11,7 @@ public class animationControl : MonoBehaviour
     public int timerRounded;
     SpriteRenderer s;
     EnemyTowardsPlayer deadCheck;
+    EnemyRandomMovement deadCheck1;
     PlayerMovement playerDeadCheck;
     void Start()
     {
@@ -21,7 +22,7 @@ public class animationControl : MonoBehaviour
                 deadCheck = GetComponent<EnemyTowardsPlayer>();
                 break;
             case "EnemyRandom":
-                deadCheck = GetComponent<EnemyTowardsPlayer>();
+                deadCheck1 = GetComponent<EnemyRandomMovement>();
                 break;
             case "Player":
                 playerDeadCheck = GetComponent<PlayerMovement>();
@@ -50,9 +51,23 @@ public class animationControl : MonoBehaviour
             }
 
         }
+        if (deadCheck1 != null)
+        {
+            if (!deadCheck1.dead)
+            {
+                timer += Time.deltaTime;
+                timerRounded = Convert.ToInt32(timer);
+                s.sprite = sprites[timerRounded];
+
+                if (timer > 1.4f)
+                {
+                    timer = -.5f;
+                }
+            }
+        }
         if (playerDeadCheck != null)
         {
-            if (!playerDeadCheck.isDead)
+            if (!playerDeadCheck.isDead )
             {
                 timer += Time.deltaTime;
                 timerRounded = Convert.ToInt32(timer);

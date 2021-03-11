@@ -13,6 +13,8 @@ public class EnemyTowardsPlayer : MonoBehaviour
     public bool dead = false;
     bool moved = false;
     const float RAYCAST_DISTANCE = 0.2f;
+    [SerializeField]
+    AudioClip step;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,12 +57,14 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                         Debug.Log("16");
                                         playerMove.delaySetTurn();
                                         moved = true;
+                                        playEnemyStep();
                                         return;
                                     }
                                 }
                                 transform.position += Vector3.down;
                                 playerMove.delaySetTurn();
                                 moved = true;
+                                playEnemyStep();
                                 return;
 
                             }
@@ -69,6 +73,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                         Debug.Log(0);
                         playerMove.delaySetTurn();
                         moved = true;
+                        playEnemyStep();
                         return;
                     }
                     if (Gap.y > 0)
@@ -83,6 +88,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     Debug.Log("2");
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
 
                                 }
@@ -92,6 +98,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("1");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                         else
@@ -103,6 +110,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     transform.position += Vector3.right;
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -110,6 +118,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("2");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     }
@@ -125,6 +134,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     Debug.Log("15");
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -132,6 +142,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("3");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                         else
@@ -143,6 +154,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     transform.position += Vector3.right;
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -150,6 +162,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("4");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     }
@@ -168,6 +181,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     transform.position += Vector3.down;
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -175,6 +189,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("6");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                         else
@@ -186,6 +201,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     transform.position += Vector3.left;
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -193,6 +209,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("7");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     }
@@ -208,6 +225,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     Debug.Log("14");
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -215,6 +233,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("8");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                         else
@@ -233,6 +252,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                             Debug.Log("9");
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     }
@@ -254,6 +274,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     transform.position += Vector3.right;
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
@@ -262,6 +283,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                 transform.position += Vector3.left;
                                 playerMove.delaySetTurn();
                                 moved = true;
+                                playEnemyStep();
                                 return;
                             }
                         }
@@ -270,6 +292,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     Debug.Log("10");
                     playerMove.delaySetTurn();
                     moved = true;
+                    playEnemyStep();
                     return;
                 }
                 else
@@ -285,12 +308,14 @@ public class EnemyTowardsPlayer : MonoBehaviour
                                     transform.position += Vector3.right;
                                     playerMove.delaySetTurn();
                                     moved = true;
+                                    playEnemyStep();
                                     return;
                                 }
                             }
                             transform.position += Vector3.left;
                             playerMove.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     }
@@ -298,6 +323,7 @@ public class EnemyTowardsPlayer : MonoBehaviour
                     Debug.Log("11");
                     playerMove.delaySetTurn();
                     moved = true;
+                    playEnemyStep();
                     return;
                 }
 
@@ -322,5 +348,11 @@ public class EnemyTowardsPlayer : MonoBehaviour
         dead = true;
         playerMove.setEnemyDead(true);
 
+    }
+    public void playEnemyStep()
+    {
+
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(step, 0.7f);
     }
 }

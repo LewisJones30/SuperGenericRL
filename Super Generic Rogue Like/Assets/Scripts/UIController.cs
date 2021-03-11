@@ -160,7 +160,7 @@ public class UIController : MonoBehaviour
         if (getRoomCompletedCount() == 0)
         {
             GameOverRoomsCompletedText.GetComponent<Text>().text = "No rooms completed. Better luck next time!";
-            GameOverRoomsCompletedText.GetComponent<Text>().fontSize = 75;
+            GameOverRoomsCompletedText.GetComponent<Text>().fontSize = 70;
         }
         else
         {

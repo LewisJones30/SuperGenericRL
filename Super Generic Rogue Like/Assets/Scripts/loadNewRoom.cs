@@ -14,8 +14,6 @@ public class loadNewRoom : MonoBehaviour
     public GameObject enemyRandom;
     public Camera mainCam;
     bool keyLoadedCorrectly = false;
-    const int MAXIMUM_NUMBER_OF_ENEMIES = 5;
-    const int MINIMUM_NUMBER_OF_ENEMIES = 1;
     int roomClearCount;
     public void loadNextTile(int roomsCleared)
     {
@@ -42,7 +40,11 @@ public class loadNewRoom : MonoBehaviour
                 keyLoadedCorrectly = true;
             }
         }
-        int numberOfEnemies = Random.Range(MINIMUM_NUMBER_OF_ENEMIES, MAXIMUM_NUMBER_OF_ENEMIES); //1-5. Bug with unity means that it does not go up to 6, instead to 5.
+        int numberOfEnemies = Random.Range(roomsCleared + 1, roomsCleared + 3); //Added one due to range issue.
+        if (numberOfEnemies > 10)
+        {
+            numberOfEnemies = 10;
+        }
         for (int i = 0; i < numberOfEnemies; i++)
         {
             bool enemyLoadedCorrectly = false;

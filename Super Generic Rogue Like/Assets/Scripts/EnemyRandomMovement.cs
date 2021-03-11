@@ -9,8 +9,10 @@ public class EnemyRandomMovement : MonoBehaviour
     RaycastHit2D hit;
     [SerializeField]
     Sprite[] sprites = new Sprite[2];
-    bool dead = false;
+    public bool dead = false;
     bool moved = false;
+    [SerializeField]
+    AudioClip step;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,7 @@ public class EnemyRandomMovement : MonoBehaviour
                             transform.position += Vector3.up;
                             Player.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     case 1:
@@ -60,6 +63,7 @@ public class EnemyRandomMovement : MonoBehaviour
                             transform.position += Vector3.left;
                             Player.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     case 2:
@@ -74,6 +78,7 @@ public class EnemyRandomMovement : MonoBehaviour
                             transform.position += Vector3.down;
                             Player.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                     case 3:
@@ -88,6 +93,7 @@ public class EnemyRandomMovement : MonoBehaviour
                             transform.position += Vector3.right;
                             Player.delaySetTurn();
                             moved = true;
+                            playEnemyStep();
                             return;
                         }
                 }
@@ -110,5 +116,11 @@ public class EnemyRandomMovement : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
         dead = true;
         Player.setEnemyDead(true);
+    }
+    public void playEnemyStep()
+    {
+
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(step, 0.7f);
     }
 }

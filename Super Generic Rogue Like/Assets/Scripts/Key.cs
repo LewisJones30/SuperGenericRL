@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 public class Key : MonoBehaviour
 {
     Tilemap tiles;
+    [SerializeField]
+    AudioClip keyCollectedSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class Key : MonoBehaviour
        {
             Debug.Log("Key obtained!");
             collision.gameObject.GetComponent<PlayerMovement>().setKeyObtained(true);
+            collision.gameObject.GetComponent<PlayerMovement>().playCollectedKey();
             GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>().EnableKeySprite();
             Destroy(gameObject);
         }
@@ -33,6 +36,7 @@ public class Key : MonoBehaviour
     {
         if (collision.gameObject.name == "BlockTerrain")
         {
+           
             int roomsCleared = GameObject.Find("UIController").GetComponent<UIController>().getRoomCompletedCount();
             Instantiate(this, new Vector3(roomsCleared * 12 + (Random.Range(-5, 5) + 0.5f), Random.Range(-5, 5) + 0.5f, 0), Quaternion.identity);
             Destroy(gameObject);

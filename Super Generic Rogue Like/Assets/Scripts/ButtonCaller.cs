@@ -22,7 +22,7 @@ public class ButtonCaller : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("SampleScene"); //Default scene for the game currently. Ensure that this is changed.
+        SceneManager.LoadScene("map gen"); //Default scene for the game currently. Ensure that this is changed.
     }
     public void ContinueGame()
     {
