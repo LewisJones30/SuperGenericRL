@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("EnemyDead: " + enemyDead);
         //Check if game is paused, if paused, do not allow movement
         if (UIController.getPaused())
         {
@@ -45,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Turn && movedCount < 2 && isDead == false && turnSwapDelay == false) //Check if it is their turn, they aren't dead and the delay between enemy movement isn't active.
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                movedCount = 2;
+            }
             if (Input.GetKeyDown(KeyCode.W))
             {
                 if (stuckInMud)//Absorb a turn to "get out" of the mud.
@@ -60,15 +63,28 @@ public class PlayerMovement : MonoBehaviour
                     }
                     if (hit.collider.gameObject.tag == "Door")
                     {
-                        if (getKeyObtained())
+                        if (getKeyObtained() && enemyDead)
                         {
                             //Next room
                             UIController.addTurnsRemaining();
                             UIController.addRoomsCompleted(1);
+                            Debug.Log("here 1");
+                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                            UIController.DisableKeySprite();
                         }
                         else
                         {
-                            UIController.EnableUIKeyText();
+                            if (!enemyDead)
+                            {
+                                UIController.EnableUIKeyText(0);
+                            }
+                            else
+                            {
+
+                            }
+                            UIController.EnableUIKeyText(1);
+
+                            return;
                         }
                     }
                 }
@@ -93,16 +109,28 @@ public class PlayerMovement : MonoBehaviour
                     }
                     if (hit.collider.gameObject.tag == "Door")
                     {
-                        if (getKeyObtained())
+                        if (getKeyObtained() && enemyDead)
                         {
                             //Next room
                             UIController.addTurnsRemaining();
                             UIController.addRoomsCompleted(1);
-                           
+                            Debug.Log("here 1");
+                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                            UIController.DisableKeySprite();
                         }
                         else
                         {
-                            UIController.EnableUIKeyText();
+                            if (!enemyDead)
+                            {
+                                UIController.EnableUIKeyText(0);
+                            }
+                            else
+                            {
+
+                            }
+                            UIController.EnableUIKeyText(1);
+
+                            return;
                         }
                     }
                 }
@@ -126,15 +154,28 @@ public class PlayerMovement : MonoBehaviour
                     }
                     if (hit.collider.gameObject.tag == "Door")
                     {
-                        if (getKeyObtained())
+                        if (getKeyObtained() && enemyDead)
                         {
                             //Next room
                             UIController.addTurnsRemaining();
                             UIController.addRoomsCompleted(1);
+                            Debug.Log("here 1");
+                            loadRoom.loadNextTile(UIController.getRoomCompletedCount());
+                            UIController.DisableKeySprite();
                         }
                         else
                         {
-                            UIController.EnableUIKeyText();
+                            if (!enemyDead)
+                            {
+                                UIController.EnableUIKeyText(0);
+                            }
+                            else
+                            {
+
+                            }
+                            UIController.EnableUIKeyText(1);
+
+                            return;
                         }
                     }
                 }
@@ -158,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     if (hit.collider.gameObject.tag == "Door")
                     {
-                        if (getKeyObtained())
+                        if (getKeyObtained() && enemyDead)
                         {
                             //Next room
                             UIController.addTurnsRemaining();
@@ -169,7 +210,17 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
-                            UIController.EnableUIKeyText();
+                            if (!enemyDead)
+                            {
+                                UIController.EnableUIKeyText(0);
+                            }
+                            else
+                            {
+
+                            }
+                            UIController.EnableUIKeyText(1);
+                            
+                            return;
                         }
                     }
                 }

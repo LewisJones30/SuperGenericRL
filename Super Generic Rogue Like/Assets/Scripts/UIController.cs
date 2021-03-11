@@ -125,9 +125,17 @@ public class UIController : MonoBehaviour
 
     //Public methods
 
-    public void EnableUIKeyText()
+    public void EnableUIKeyText(int value) //if 0, the key has not been obtained. If 1, all enemies are not dead.
     {
         KeyNotUnlocked.SetActive(true);
+        if (value > 0)
+        {
+            KeyNotUnlocked.GetComponent<Text>().text = "Kill all enemies to progress!";
+        }
+        else
+        {
+            KeyNotUnlocked.GetComponent<Text>().text = "You need the key to progress!";
+        }
     }
     public void DisableUIKeyText()
     {
